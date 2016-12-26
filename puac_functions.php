@@ -171,7 +171,7 @@ function story_details2($story_id, $connection_string){
 function story_details_index($story_id, $connection_string){
   $story = $story_id;
     
-  $connection_string2 = mysqli_connect("pullupachairindycom.ipagemysql.com","puac_root","pas5W0rd1","puac");
+  $connection_string2 = $connection_string;
 
     $sql = 'SELECT * FROM 
            `Stories` 
