@@ -1,0 +1,49 @@
+<?php
+
+echo '<table class="backstage">';
+
+if(ISSET($_GET['page_number'])){
+  $page = $_GET['page_number'];
+}
+else{
+  $page = 0;
+}
+
+$result = mysqli_query($connection_string, "SELECT count(*) FROM Performers");
+$row = mysqli_fetch_row($result);
+$total_artists = $row[0];
+
+$start_page = 10 * $page;
+
+$last_page = floor($total_artists / 10);
+
+$sql = "SELECT * FROM `Performers` WHERE `Status` = 'ACTV' ORDER BY `PerformerFirstName` LIMIT ".$start_page.",10";
+    
+if($result = mysqli_query($connection_string, $sql)){
+          
+  while($row = mysqli_fetch_array($result)){
+    echo '<tr><td><a href="container.php?action=performer&context=view&performer='.$row['PerformerID'].'">'.$row['PerformerFirstName'].' '.$row['PerformerLastName'].'</a></td> <td><span class="view-sprite"> </span></td> <td><span class="delete-sprite"> </span> </td> <td><span class="delete-sprite"> </span></td></tr>';
+  
+  }
+}
+else{
+  $artists = die('Error: ' . mysqli_error($connection_string));
+}
+
+if($page == 0){
+  $page++;
+  $url = '<a href="home.php?page_number='.$page.'">Next ---></a>';
+}
+elseif($last_page <= $page){
+  $page--;
+  $url = '<a href="home.php?page_number='.$page.'"><--- Previous</a>';
+}
+else{
+  $prev_page = $page - 1;
+  $next_page = $page + 1;
+  $url = '<a href="home.php?page_number='.$prev_page.'"><--- Previous</a>'.' '.'<a href="home.php?page_number='.$next_page.'">Next ---></a>';
+}
+echo '<tr><td colspan="4">'.$url.'</td></tr>';
+echo '</table>';
+
+?>

@@ -146,6 +146,10 @@ switch($context){
     
     if($result = mysqli_query($connection_string, $sql)){
       while($row = mysqli_fetch_array($result)){
+        if(!ISSET($first)){
+          echo '<option value=""></option>\n';
+          $first = TRUE;
+        }
         echo '<option value="'.$row['PerformerID'].'">'.$row['PerformerFirstName'].' '.$row['PerformerLastName'].'</option>\n';
       }
     }
@@ -203,6 +207,10 @@ switch($context){
     
     if($result = mysqli_query($connection_string, $sql)){
       while($row = mysqli_fetch_array($result)){
+        if(!ISSET($first)){
+          echo '<option value=""></option>\n';
+          $first = TRUE;
+        }
         echo '<option value="'.$row['PerformerID'].'">'.$row['PerformerFirstName'].' '.$row['PerformerLastName'].'</option>\n';
       }
     }

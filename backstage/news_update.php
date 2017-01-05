@@ -1,5 +1,7 @@
 <?php
 
+$context = '';
+
 // Includes
 include_once("connection_string.php");  
 include_once("puac_functions.php");  
@@ -9,10 +11,10 @@ include_once("puac_functions.php");
     $context = $_GET["context"];
   }
 
-  if(ISSET($_GET["news_id"])){
+  if(ISSET($_GET["news_id"], $connection_string)){
   $news_id = $_GET["news_id"];
 
-    $connection_string = mysqli_connect("localhost","root","pas5W0rd1","puac");
+    $connection_string = $connection_string;
 
     $sql = 'SELECT * FROM 
            `NewsUpdates` 
@@ -39,12 +41,12 @@ include_once("puac_functions.php");
 }
 
 // Check if form was posted to add stories to the database
-if(ISSET($_POST["posted"])){
+if(ISSET($_POST["insert"])){
 
   $update_title        = $_POST["update_title"];
   $update_text         = $_POST["update_text"];
-  $date_added          = date('Y-m-d', strtotime(str_replace('-', '/',$_POST["date_added"]));
-  $date_expires        = date('Y-m-d', strtotime(str_replace('-', '/',$_POST["date_expired"]));
+  $date_added          = date('Y-m-d', strtotime(str_replace('-', '/',$_POST["date_added"])));
+  $date_expires        = date('Y-m-d', strtotime(str_replace('-', '/',$_POST["date_expires"])));
   $status              = $_POST["status"];  
 
   $sql = sprintf("INSERT INTO NewsUpdates (UpdateTitle,UpdateText,DateAdded,DateExpires,Status) VALUES ('%s','%s','%s','%s','%s')", 
@@ -64,63 +66,85 @@ if(ISSET($_POST["posted"])){
     die('Error: ' . mysqli_error($connection_string));
 
   }
+    header('Location:home.php');
     
 }
 
 // Check if form was posted to UPDATE stories in the database
-if(ISSET($_POST["updated"])){
+if(ISSET($_POST["update"])){
 
   $update_title        = $_POST["update_title"];
   $update_text         = $_POST["update_text"];
-  $date_added          = date('Y-m-d', strtotime(str_replace('-', '/',$_POST["date_added"]));
-  $date_expires        = date('Y-m-d', strtotime(str_replace('-', '/',$_POST["date_expired"]));
-  $status              = $_POST["status"];  
+  $date_added          = date('Y-m-d', strtotime(str_replace('-', '/',$_POST["date_added"])));
+  $date_expires        = date('Y-m-d', strtotime(str_replace('-', '/',$_POST["date_expires"])));  
+  $status              = $_POST["status"];
   $news_id             = $_POST["news_id"];  
 
-  $sql = sprintf("UPDATE `NewsUpdates` SET UpdateTitle = '%s', UpdateText = '%s', DateAdded = '%s', DateExpires = '%s', Status = '%s' WHERE `StoryID`= $news_id", 
+  $sql = sprintf("UPDATE `NewsUpdates` SET UpdateTitle = '%s', UpdateText = '%s', DateAdded = '%s', DateExpires = '%s', Status = '%s' WHERE `UpdateID`= $news_id", 
     
     mysqli_real_escape_string($connection_string,$update_title), 
     mysqli_real_escape_string($connection_string,$update_text), 
     mysqli_real_escape_string($connection_string,$date_added), 
-    mysqli_real_escape_string($connection_string,$date_expired), 
+    mysqli_real_escape_string($connection_string,$date_expires), 
     mysqli_real_escape_string($connection_string,$status));
     
   if($result = mysqli_query($connection_string, $sql)){
-    header('Location:home.php');
+    header('Location:container.php?action=message&error=0000000002');
     
       } else {
       
     die('Error: ' . mysqli_error($connection_string));
 
   }
-    
-}
 
+  if(ISSET($_POST["delete"])){
+
+    $status              = 'DLTD';
+    $news_id             = $_POST["news_id"];  
+
+    $sql = sprintf("UPDATE `NewsUpdates` SET Status = '%s' WHERE `UpdateID`= $news_id", 
+    
+    mysqli_real_escape_string($connection_string,$status));
+     
+    if($result = mysqli_query($connection_string, $sql)){
+      header('Location:container.php?error=0000000002');
+    
+      } else {
+      
+      die('Error: ' . mysqli_error($connection_string));
+    }    
+  }
+}
 
 
 switch($context){
   case "add":
     echo '<h1>Add A News Update</h1>';
     echo '<form action="news_update.php" method="POST">';
-    echo '<p class="label"><label for="update_title">Headline</label> <input name="updated_title" type="text"></p>';
-    echo '<p class="label"><label for="date_expires">Headline</label> <input name="date_expires" type="text"></p>';
-    echo '<p class="label"><label for="update_text">Story Description</label> <textarea name="update_text" type="text"></textarea></p>';
-    echo '<input name="status" type="hidden" value="ACTV"></p>';
-    echo '<input name="status" type="date_added" value="'.date('d/m/Y').'"></p>';
-    echo '<p class="label"><label for="submit"></label> <input name="Submit" type="Submit">';
+    echo '<p class="label"><label for="update_title">Headline</label> <input name="update_title" type="text"></p>';
+    echo '<p class="label"><label for="date_expires">Date Expires</label> <input type="text" id="datepicker" name="date_expires" value="'.$date_expires.'"></p>';
+    echo '<p class="label"><label for="update_text">News Update Information</label> <textarea name="update_text" type="text">'.$update_text.'</textarea></p>';
+    echo '<input name="status"     type="hidden" value="AP"></p>';
+    echo '<input name="posted"     type="hidden" value="POSTED"></p>';
+    echo '<input name="insert"     type="hidden" value="insert"></p>';
+    echo '<input name="date_added" type="hidden" value="'.date('d/m/Y').'"></p>';
     echo '</form>';
     break;
     
   case "update":
     echo '<h1>Update Story</h1>';
-    echo '<form action="stories.php" method="POST">';
-    echo '<p class="label"><label for="story_name">Title</label> <input name="story_name" type="text" value="'.$title.'"></p>';
-    echo '<p class="label"><label for="show_order">Show Order</label> <input name="show_order" type="text" value="'.$show_order.'"></p>';
-    echo '<p class="label"><label for="story_description">Story Description</label> <textarea name="story_description" type="text">'.$description.'</textarea></p>';
-    echo '<p class="label"><label for="story_video"> Video Embed Link</label> <textarea name="story_video" type="text">'.$video_link.'</textarea></p>';
+    echo '<form action="news_update.php" method="POST">';
+    echo '<p class="label"><label for="update_title">Headline</label> <input name="update_title" value="'.$update_title.'" type="text"></p>';
+    echo '<p class="label"><label for="date_expires">Date Expires</label> <input type="text" id="datepicker" name="date_expires" value="'.$expiration_date.'"></p>';
+    echo '<p class="label"><label for="update_text">News Update Information</label> <textarea name="update_text" type="text">'.$update_text.'</textarea></p>';
+    echo '<input name="status"  type="hidden" value="AP"></p>';
+    echo '<input name="posted"  type="hidden" value="POSTED"></p>';
+    echo '<input name="update"  type="hidden" value="update"></p>';
+    echo '<input name="news_id" type="hidden" value="'.$news_id.'"></p>';
+    echo '<input name="date_added" type="hidden" value="'.date('d/m/Y').'"></p>';
     
     if($context == "update"){
-      echo '<input name="story_id" type="hidden" value="'.$story_id.'"></p>';
+      echo '<input name="story_id" type="hidden" value="'.$news_id.'"></p>';
       echo '<input name="updated" type="hidden" value="update"></p>';
       echo '<input name="status" type="hidden" value="ACTV"></p>';
     }
@@ -132,8 +156,9 @@ switch($context){
     echo '</form>';
     break;
   case "view":
-    echo '<h1>'.$pfirst_name.' '.$plast_name.'</h1>';
-    echo '<p>'.$bio.'</p>';
+    echo '<h1>'.$update_title.'</h1>';
+    echo '<p>Date expires: '.$expiration_date.'</p>';
+    echo '<p>'.$update_text.'</p>';
     break;
   default:
     echo '<h3>Invalid Argument</h3>';

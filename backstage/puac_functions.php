@@ -22,12 +22,11 @@ function verify_access($user_access){
 
 // Check URL for error code
 
-function check_error($check_error){
+function check_error($check_error, $connection_string){
 
-$connection_string = mysqli_connect("localhost","root","pas5W0rd1","puac");
-  
-  $error_number = $check_error;
-    
+  $connection_string = $connection_string;
+  $error_number      = $check_error;
+
   $sql = 'SELECT * FROM `Errors` WHERE `ErrorKey` = "'.$error_number.'"';
     
   $result = mysqli_query($connection_string, $sql);
@@ -63,6 +62,23 @@ function select_active_performers(){
     
 
 }
+
+// Check for Script Message
+function output_message($message_id, $connection_string){
+
+  $connection_string = $connection_string;
+  $message_id        = $message_id;
+  
+  $sql = 'SELECT * FROM `Errors` WHERE `ErrorKey` = "'.$message_id.'"';
+    
+  $result = mysqli_query($connection_string, $sql);
+    
+    while($row = mysqli_fetch_array($result)){
+        
+      echo stripslashes($row['ErrorText']);
+    }
+}
+
 
 // Select Stories and Output details
 
@@ -263,6 +279,71 @@ function show_order($show_id){
        die('Error: ' . mysqli_error($connection_string));
     }
     echo '</table>';
+}
+
+// Show News Updates
+
+function current_news($current_date, $connection_string){
+    
+    $current_date = $current_date;
+    $connection_string = $connection_string;
+
+    $sql = 'SELECT * FROM 
+           `NewsUpdates` 
+           WHERE `DateExpires` > '.$current_date;
+    
+    if($result = mysqli_query($connection_string, $sql)){
+        
+      while($row = mysqli_fetch_array($result)){
+      
+        $update_title     = stripslashes($row['UpdateTitle']);
+        $update_text      = stripslashes(nl2br($row['UpdateText']));
+        $date_added       = stripslashes($row['DateAdded']);
+        $expiration_date  = stripslashes($row['DateExpires']);
+        $status           = stripslashes($row['Status']);
+        
+        echo '<h2>'.$update_title.'</h2>';
+        echo '<p>'.$update_text.'</p>';
+
+      }
+  
+    }else{
+    
+       die('Error: ' . mysqli_error($connection_string));
+    }
+
+}
+
+// Update News Stories
+
+function update_news($current_date, $connection_string){
+    
+    $current_date = $current_date;
+    $connection_string = $connection_string;
+
+    $sql = 'SELECT * FROM 
+           `NewsUpdates` 
+           WHERE `DateExpires` > '.$current_date;
+    
+    if($result = mysqli_query($connection_string, $sql)){
+        
+      while($row = mysqli_fetch_array($result)){
+      
+        $update_id        = stripslashes($row['UpdateID']);
+        $update_title     = stripslashes($row['UpdateTitle']);
+        $update_text      = stripslashes(nl2br($row['UpdateText']));
+        $date_added       = stripslashes($row['DateAdded']);
+        $expiration_date  = stripslashes($row['DateExpires']);
+        $status           = stripslashes($row['Status']);
+        
+        echo '<p><a class="news" href="container.php?action=news&context=update&news_id='.$update_id.'">'.$update_title.'</a></p>';
+      }
+  
+    }else{
+    
+       die('Error: ' . mysqli_error($connection_string));
+    }
+
 }
 
 ?>

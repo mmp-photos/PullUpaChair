@@ -48,7 +48,7 @@ body {
 }
 #performer-box {
   display: block;
-  width: 350px;
+  width: 365px;
   float: right;
   background-color: #e5eefc;
   border: 1px;
@@ -56,7 +56,40 @@ body {
   border-style: solid;
   text-align: center;
 }
+#story-box {
+  display: block;
+  width: 365px;
+  float: left;
+  background-color: #e5eefc;
+  border: 1px;
+  border-color: #c7c9cc;
+  border-style: solid;
+  text-align: center;
+}
+#news-box {
+  display: block;
+  width: 100%;
+  background-color: #e5eefc;
+  border: 1px;
+  border-color: #c7c9cc;
+  border-style: solid;
+  text-align: center;
+  margin-bottom: 18px;
+}
 
+#news-box-left {
+  display: inline-block;
+  width: 300px;
+  text-align: center;
+  margin-right: 90px;
+}
+
+#news-box-right {
+  display: inline-block;
+  width: 300px;
+  text-align: left;
+  vertical-align: top;
+}
 a:link {
     text-decoration: none;
     font-family: 'Cutive', serif;
@@ -86,6 +119,37 @@ a:active {
     font-family: 'Cutive', serif;
     font-weight: bold;
     margin-top:3px;
+    color: #ed1b24;
+}
+a.news:link {
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0, 0, 0, 0;
+    color: #ed1b24;
+}
+
+a.news:visited {
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0, 0, 0, 0;
+    color: gray;
+}
+
+a.news:hover {
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0, 0, 0, 0;
+    color: #f5fb9d;
+}
+
+a.news:active {
+    text-decoration: underline;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0, 0, 0, 0;
     color: #ed1b24;
 }
 
@@ -311,9 +375,11 @@ and (min-device-width : 736px){
     margin: 0px 36px 0px 10px;
   }
 
-span.clear-float{
-  clear: both;
-}
+  p.clear-float{
+    display: block;
+    width: 100%;
+    clear: both;
+  }
 
 span.delete-sprite{
   display: inline-block;
@@ -351,6 +417,7 @@ label {
   width: 80px;
   text-align: right;
   font-size: 12px;
+  vertical-align: top;
 }
 
   p.center {
