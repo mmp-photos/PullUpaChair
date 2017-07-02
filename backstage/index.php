@@ -15,6 +15,7 @@ if(ISSET($_GET['error'])){
 
 }
 
+
 // Check to see if sign-in form was submitted and process request
 
 if(ISSET($_POST['posted'])){
@@ -32,16 +33,18 @@ if(ISSET($_POST['posted'])){
       $first_name     = stripslashes($row['UFirstName']);
       $last_name      = stripslashes($row['ULastName']);
       $UserAccess     = stripslashes($row['UserAccess']);
-      
+            
       if (password_verify($password, $hash)) {
         
         $_SESSION["FirstName"]   = $first_name;
         $_SESSION["LastName"]    = $last_name;
         $_SESSION["UserAccess"]  = $UserAccess;
-                
+
+        setcookie("name", $first_name);
+        
         header('Location:home.php');
     
-      }   
+      } 
 
     }
   }  
@@ -123,9 +126,10 @@ document.write(Style);
 </script>
 
 <hr>
+<p class="clear">&nbsp;</p>
 
 <div id="center-box">
-  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+  <form action="index.php" method="POST">
 
   <p class="label"><label for="email">Username</label> <input name="email" type="text"></p>
   <p class="label"><label for="password">Password</label> <input name="password" type="password"></p>
@@ -146,7 +150,6 @@ document.write(Style);
   <p class="label"><label for="submit"></label> <input name="Submit" type="Submit"></p>
   </form>
 </div>
-<hr>
 
 
 <?php

@@ -53,6 +53,10 @@ if(isset($_POST["posted"])){
     $user_access = 'ADMIN';
     $user_status = 'ACTV';
     $hash = password_hash($password1, PASSWORD_BCRYPT);
+    
+    echo $hash;
+    die;
+    
     $current_date = date("Y-m-d h:m:s");
     $email = mysqli_real_escape_string($connection_string, $_POST['email']);
     

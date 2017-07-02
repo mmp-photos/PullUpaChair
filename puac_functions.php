@@ -122,7 +122,7 @@ function story_details($story_id, $connection_string){
 function story_details2($story_id, $connection_string){
   $story = $story_id;
     
-  $connection_string2 = $connection_string;
+  $connection_string = $connection_string;
 
     $sql = 'SELECT * FROM 
            `Stories` 
@@ -206,18 +206,20 @@ function story_details_index($story_id, $connection_string){
 
 
     if(ISSET($title)){
-      echo '<h1>Featured Story</h1>';
+      echo '<div id="featured-story">';
+      echo '<h2>Featured Story</h2>';
       echo $video_link;
       
       if(ISSET($performer_name)){
         echo '<p class="performer-name">By: <a href="performer.php?performer='.$pID.'">'.$performer_name.'</a></p>'; 
       }
       echo '<p class="show-date">Show: '.$formatted_date.'</p>';
+      echo '<hr>';
+      echo '</div>';
     }
     else{
       echo "<p>The story could not be found.</p>";
     }
-    
 }
 
 // Select Stories and Output details
@@ -264,4 +266,37 @@ function show_order($show_id, $connection_string){
     }
     echo '</table>';
 }
+
+// View News Stories
+
+function view_news($current_date, $connection_string){
+    
+    $current_date = $current_date;
+    $connection_string = $connection_string;
+
+    $sql = 'SELECT * FROM 
+           `NewsUpdates` 
+           WHERE `DateExpires` > '.$current_date.' ORDER BY `DateExpires` DESC';
+    
+    if($result = mysqli_query($connection_string, $sql)){
+        
+      while($row = mysqli_fetch_array($result)){
+      
+        $update_id        = stripslashes($row['UpdateID']);
+        $update_title     = stripslashes($row['UpdateTitle']);
+        $update_text      = stripslashes(nl2br($row['UpdateText']));
+        $date_added       = stripslashes($row['DateAdded']);
+        $expiration_date  = stripslashes($row['DateExpires']);
+        $status           = stripslashes($row['Status']);
+        
+        echo '<h2>'.$update_title.'</h2>';
+        echo '<p class="news-update">'.$update_text.'</p>';
+      }
+  
+    }else{
+    
+       die('Error: ' . mysqli_error($connection_string));
+    }
+}
+
 ?>

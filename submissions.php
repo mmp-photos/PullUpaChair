@@ -3,9 +3,9 @@
 
 // Includes
 
-include_once("connection_string.php");  
-include_once("puac_functions.php");  
-include_once("functions/index_functions.php");  
+include_once("connection_string.php");
+include_once("puac_functions.php");
+include_once("functions/submissions_functions.php");
 
 // Check for errors passed in the URL
 
@@ -15,6 +15,35 @@ if(ISSET($_GET['error'])){
 
 }
 
+$show_id = GetShowID($current_date, $connection_string);
+  
+if(ISSET($_POST['posted'])){
+  $posted = $_POST;
+  $error = submission($posted);
+
+// Insert data into Database //
+
+if(!ISSET($error['edit'])){
+  $state = 'insert';
+  if($state== 'insert'){
+    InsertSubmission($error, $posted, $connection_string, $show_id);
+    MailSubmission($error, $posted);
+    $state = 'confirm';
+  }
+}
+else{
+  $state = '';
+}
+  
+
+// Determine State of Page to Be Displayed //
+if(ISSET($error['edit'])){
+  $state = 'edit';
+  }
+}
+else{
+  $state = 'input';
+}
 ?>
 
 <!DOCTYPE HTML>
@@ -88,42 +117,63 @@ document.write(Style);
 
 <body>
 
+<div id="box">
+
+<p><img src="images/menu.png" alt="navigation" id="mobile_nav" onclick="ShowDiv()"></p>
+
+<div id="turn_off_nav" onclick="HideDiv()">
+
+</div>
+
+<div id="top_nav">
+  <?php
+    include 'navigation.php';
+  ?>
+    
+</div>
+
 <script>
   document.write(Logo);
 </script>
 
+<div id="main_nav">
+  <?php
+    include 'navigation.php';
+  ?>
+</div>  
+
+<!-- Additional Scripting -->
+
+<div id="upcoming">
+<p class="calendar_month">Submitting For</p>
 <?php
-
-// Upcoming Show //
-
-NextShowIndex($current_date, $connection_string);
-$story_id = 2;
-
+  $formatted_date = next_show($current_date, $connection_string);  
 ?>
+</div>
+<div>
 
 <!-- Body Copy -->
 
-<div id="welcome">
+<div id="right_column">
+<h1>Submit a Story</h1>
 
-<h1>Welcome!</h1>
-<p>A spin on traditional storytelling, Pull Up A Chair will feature spoken stories in addition to stories told using other art forms - including dance, music, burlesque, visual art and more from some of Indy's best artists.</p>
-
-<?php
-
-// Featured Story //
-
-story_details_index($story_id, $connection_string);
-
-?>
-
-<!-- Show News Updates -->
+<!-- Begin Submission Form -->
 
 <?php
-  view_news($current_date, $connection_string)
+  
+  if($state == "edit"){
+    SubmissionErrors($error, $_POST, $show_id);
+  }
+  elseif($state == 'confirm'){
+    VerificationPage($error, $posted);
+  }
+  elseif($state == 'input'){
+    SubmissionForm($show_id);
+  }
 ?>
-
-<p class="clear">&nbsp;</p>
 </div>
+<p class="clear">&nbsp;</p>
+
 <hr>
 
 <?php
@@ -131,24 +181,6 @@ story_details_index($story_id, $connection_string);
   include 'footer.php';
 
 ?>
-
-<div id="menu">
-
-  <p><img onclick="ShowDiv();" src="images/menu.png" alt="navigation" id="mobile_nav"></p>
-  <div id="top_nav">
-  <p class="float_right" id="turn_off_nav" onclick="HideDiv();">X</p>
-  <?php
-    include 'navigation.php';
-  ?>
-  </div>
-  <div id="main_nav">
-    <?php
-      include 'navigation.php';
-    ?>
-  </div>
-
-</div>
-
 </div>
 </body>
 </html>

@@ -27,6 +27,7 @@
 body {
   background-color: #FFFFFF;
   font-family: 'Libre Baskerville', serif;
+  font-size: 12px;
 }
 
 #container {
@@ -66,6 +67,18 @@ body {
   border-style: solid;
   text-align: center;
 }
+
+#show-box {
+  display: block;
+  width: 100%;
+  background-color: #e5eefc;
+  border: 1px;
+  border-color: #c7c9cc;
+  border-style: solid;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
 #news-box {
   display: block;
   width: 100%;
@@ -121,6 +134,29 @@ a:active {
     margin-top:3px;
     color: #ed1b24;
 }
+
+a.lite:link {
+    text-decoration: none;
+    font-weight: normal;
+    color: #ed1b24;
+}
+
+a.lite:visited {
+    text-decoration: none;
+    color: gray;
+}
+
+a.lite:hover {
+    text-decoration: none;
+    color: #f5fb9d;
+}
+
+a.lite:active {
+    text-decoration: underline;
+    font-family: 'Cutive', serif;
+    color: #ed1b24;
+}
+
 a.news:link {
     text-decoration: none;
     font-size: 12px;
@@ -361,6 +397,13 @@ and (min-device-width : 736px){
     font-weight: normal;
     margin-top: 40px;
   }
+  h2.left{
+    font-family: 'Cutive', serif;
+    font-size: 16px;
+    font-weight: normal;
+    margin-top: 40px;
+    text-align: left;
+  }
     
   img.main {
     display: inline-block;
@@ -389,7 +432,13 @@ span.delete-sprite{
   width: 20px;
   height: 18px;
 }
-
+span.label {
+  display: inline-block;
+  width: 80px;
+  margin-right: 6px;
+  text-align: right;
+  color: #92959b;
+}
 span.update-sprite{
   display: inline-block;
   background-color: #000000;
@@ -420,6 +469,10 @@ label {
   vertical-align: top;
 }
 
+p {
+  display: block;
+  text-align: left;
+}
   p.center {
     display: block;
     text-align: center;
@@ -473,6 +526,22 @@ table.backstage {
 td {
   padding: 3px;
 }
+td.submissions {
+  vertical-align: top;
+  width: 200px;
+}
+td.submissions-name {
+  padding-right: 15px;
+  width: 100px;
+  text-align: right;
+}
+tr.submitted {
+  background-color: #e5eefc;
+}
+tr.approved {
+  background-color: #e5eefc;
+}
+
 @media only screen 
 and (min-device-width : 736px){
 

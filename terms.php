@@ -3,17 +3,9 @@
 
 // Includes
 
-include_once("connection_string.php");  
-include_once("puac_functions.php");  
-include_once("functions/index_functions.php");  
-
-// Check for errors passed in the URL
-
-if(ISSET($_GET['error'])){
-
-  $error_message = check_error($_GET['error']);
-
-}
+include_once("connection_string.php");
+include_once("puac_functions.php");
+include_once("functions/submissions_functions.php");
 
 ?>
 
@@ -88,42 +80,38 @@ document.write(Style);
 
 <body>
 
+<div id="box">
+
+<p><img src="images/menu.png" alt="navigation" id="mobile_nav" onclick="ShowDiv()"></p>
+
+<div id="turn_off_nav" onclick="HideDiv()">
+
+</div>
+
+<div id="top_nav">
+  <?php
+    include 'navigation.php';
+  ?>
+    
+</div>
+
 <script>
   document.write(Logo);
 </script>
 
+<div id="main_nav">
+  <?php
+    include 'navigation.php';
+  ?>
+</div>  
+
+<!-- Additional Scripting -->
+
+<h1>Terms & Conditions for Pull Up a Chair</h1>
 <?php
-
-// Upcoming Show //
-
-NextShowIndex($current_date, $connection_string);
-$story_id = 2;
-
+  ShowTerms($current_date, $connection_string)
 ?>
 
-<!-- Body Copy -->
-
-<div id="welcome">
-
-<h1>Welcome!</h1>
-<p>A spin on traditional storytelling, Pull Up A Chair will feature spoken stories in addition to stories told using other art forms - including dance, music, burlesque, visual art and more from some of Indy's best artists.</p>
-
-<?php
-
-// Featured Story //
-
-story_details_index($story_id, $connection_string);
-
-?>
-
-<!-- Show News Updates -->
-
-<?php
-  view_news($current_date, $connection_string)
-?>
-
-<p class="clear">&nbsp;</p>
-</div>
 <hr>
 
 <?php
@@ -131,24 +119,6 @@ story_details_index($story_id, $connection_string);
   include 'footer.php';
 
 ?>
-
-<div id="menu">
-
-  <p><img onclick="ShowDiv();" src="images/menu.png" alt="navigation" id="mobile_nav"></p>
-  <div id="top_nav">
-  <p class="float_right" id="turn_off_nav" onclick="HideDiv();">X</p>
-  <?php
-    include 'navigation.php';
-  ?>
-  </div>
-  <div id="main_nav">
-    <?php
-      include 'navigation.php';
-    ?>
-  </div>
-
-</div>
-
 </div>
 </body>
 </html>

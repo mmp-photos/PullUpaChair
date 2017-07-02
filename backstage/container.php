@@ -60,6 +60,9 @@ if(ISSET($_GET['action'])){
 
 switch($action){
 
+  case "show":
+    include("show.php");
+    break; 
   case "performer":
     include("performer.php");
     break; 
@@ -68,6 +71,9 @@ switch($action){
     break; 
   case "news":
     include("news_update.php");
+    break;
+  case "submissions":
+    include("submissions.php");
     break;
   case "message":
     $message_id = $_GET['message_id'];

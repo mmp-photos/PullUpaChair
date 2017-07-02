@@ -346,4 +346,36 @@ function update_news($current_date, $connection_string){
 
 }
 
+// View News Stories
+
+function view_news($current_date, $connection_string){
+    
+    $current_date = $current_date;
+    $connection_string = $connection_string;
+
+    $sql = 'SELECT * FROM 
+           `NewsUpdates` 
+           WHERE `DateExpires` > '.$current_date;
+    
+    if($result = mysqli_query($connection_string, $sql)){
+        
+      while($row = mysqli_fetch_array($result)){
+      
+        $update_id        = stripslashes($row['UpdateID']);
+        $update_title     = stripslashes($row['UpdateTitle']);
+        $update_text      = stripslashes(nl2br($row['UpdateText']));
+        $date_added       = stripslashes($row['DateAdded']);
+        $expiration_date  = stripslashes($row['DateExpires']);
+        $status           = stripslashes($row['Status']);
+        
+        echo '<h2>'.$update_title.'</h2>';
+        echo '<p class="news-update">'.$update_text.'</p>';
+      }
+  
+    }else{
+    
+       die('Error: ' . mysqli_error($connection_string));
+    }
+
+}
 ?>
