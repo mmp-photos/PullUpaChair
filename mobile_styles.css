@@ -13,7 +13,7 @@ a:link {
     font-family: 'Cutive', serif;
     font-weight: bold;
     margin-top:3px;
-    color: #ed1b24;
+    color: white;
 }
 
 a:visited {
@@ -138,7 +138,22 @@ a.submission:active {
     margin-left: 6px;
   }
 
+  #content{
+    display: block;
+    margin-left: 6px;
+  }
+
   #show_box{
+    display: none;
+  }  
+  
+  #show_box_index{
+    display: block;
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 55px;
+    margin-bottom: 55px;
   }  
   
   #mobile_nav {
@@ -193,7 +208,7 @@ a.submission:active {
     position: fixed;
     top: 20px;
     left: 20px;
-    width: 200px;
+    width: 90%;
     min-height: 200px;
     background: red;
     text-align: center;
@@ -205,17 +220,33 @@ a.submission:active {
     width: 200px;
     margin-left: auto;
     margin-right: auto;
+    text-transform: uppercase;
   }
 
   #top_nav li {
     color: white;
     font: 36px;
-    margin-top: 12px;
+    margin-top: 24px;
     width: 150px;
     font-family: 'Cutive', serif;
     border-bottom: 1px solid white;
   }
-
+  
+  img.main {
+    display: inline-block;
+    max-width: 90%;
+    border: 0px;
+    margin-top: 75px;
+    margin-bottom: 26px;
+  }
+  
+  #float_right {
+    display: block;
+    text-align: right;
+    width: 100%;
+    margin-bottom: 36px;
+  }
+  
 }
 
 
@@ -237,12 +268,37 @@ and (min-width : 1000px){
     display: block;
     margin-left: 250px;
   }
-
+  
+  #content{
+    display: block;
+    margin-left: 65px;
+    margin-right: 65px;
+    margin-top: 24px;
+    text-align: left;
+    padding: 80px, 12px, 80px, 12px;
+  }
+  
+  #content-center{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 24px;
+    text-align: center;
+  }
+    
   #show_box{
+    width: 250px;
     float: left;
-    margin-top: 75px;
-  }  
+    margin-top: 0px;
+    clear: left;
+  }
 
+  #show_box_index{
+    width: 250px;
+    float: left;
+    margin-top: 0px;
+  }
+  
   #main_nav {
       display: inline-block;
       width: 100%;
@@ -307,9 +363,8 @@ and (min-width : 1000px){
   }
   
   #twitterlist {
-      width: 60%;
-      margin-left: auto;
-      margin-right: auto;
+      display: inline-block;
+      width: 600px;
       margin-top: 30px;
   }
   
@@ -321,6 +376,7 @@ and (min-width : 1000px){
     width: 100%;
     min-height: 55px;
     background-color: #ed1b24;
+    text-align: left;
   }
   
   #top_nav {
@@ -335,8 +391,13 @@ and (min-width : 1000px){
     display: none;
   }
 
-
-
+  img.main {
+    display: inline-block;
+    max-width: 90%;
+    border: 0px;
+    margin-top: 105px;
+  }
+}
 
 
 
@@ -350,6 +411,14 @@ and (min-width : 1000px){
 #center-box{
   display: block;
   width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#footer{
+  display: block;
+  clear: both;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -377,12 +446,6 @@ and (min-width : 1000px){
 hr{
   margin-top: 32px;
 }
-  img.main {
-    display: inline-block;
-    max-width: 90%;
-    border: 0px;
-    margin-top: 105px;
-  }
 
   img.tagline {
     display: inline-block;
@@ -390,15 +453,22 @@ hr{
     border: 0px;
     margin: 0px 36px 0px 10px;
   }
-  
-  label {
+
+img.about {
+  display: block;
+  width: 200px;
+  float: left;
+  margin-right: 12px;
+}
+
+label {
     display: inline-block;
     width: 150px;
     text-align: right;
     margin-bottom: 10px;
     padding: 6px;
     vertical-align: top;
-  }
+}
 
   label.normal {
     display: inline-block;
@@ -422,7 +492,16 @@ ol{
   font-size: 11px;
   width: 400px;
 }
+p {
+  text-align: left;
+  width: 80%;
+}
   p.calendar_month{
+    position: relative;
+    bottom: -14px;
+    left: 0px;
+    display: inline-block;
+    width: 100%;
     text-align: center;
     font-size: 18px;
     font-weight: bold;
@@ -430,14 +509,19 @@ ol{
     background-color: red;
     padding-top: 9px;
     padding-bottom: 9px;
-    margin-top: -3px;
-    margin-bottom: -35px;
+    margin-top: 0px;
   }  
   p.calendar_day{
+    position: relative;
+    top: 0px;
+    left: 0px;
+    display: inline-block;
+    width: 100%;
     text-align: center;
     font-size: 64px;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-top: 0px;
+    margin-bottom: 10px;
   }  
   p.center {
     display: block;
@@ -450,18 +534,14 @@ ol{
     display: block;
     width: 100%;
     clear: both;
+    max-height: 2px;
+    font-size: 1px;
   }
   p.copyright {
     color: #FFFFFF;
     text-align: center;
     font-size: 12px;
     margin-top: 52px;
-  }
-
-  p.float_right {
-    float: right;
-    text-align: right;
-    width: 100%;
   }
   
   p.footer {
@@ -474,7 +554,21 @@ ol{
 p.menu-logo {
   float: left;
 }
-
+p.next_show{
+  position: relative;
+  top: 0px;
+  left: 0px;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #FFFFFF;
+  background-color: red;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  margin-top: 0px;
+}  
 p.performer-name {
   font-size: 16px;
   margin-bottom: 4px;
@@ -484,6 +578,12 @@ p.show-date {
   font-size: 12px;
   margin-top: 0px;
 }
+p.tickets {
+  margin-top: 6px;
+  width: 100px;
+}
+
+
   .bold {
     font-weight: bold;
   }
@@ -495,8 +595,6 @@ p.show-date {
 
   #turn_off_nav {
     display: none;
-    min-width: 100%;
-    min-height: 100%;
     position: absolute;
     left: 0px;
     top: 0px;
@@ -530,7 +628,7 @@ p.show-date {
      width: 110px;
      height: 32px;
      border: none;
-     padding-top: 6px
+     padding-top: 6px;
 	 font-size: 12px;
 	 font-family: Arial, sans-serif;
 	 text-align: center;
@@ -544,7 +642,7 @@ p.show-date {
      width: 110px;
      height: 32px;
      border: none;
-     padding-top: 6px
+     padding-top: 6px;
 	 font-size: 12px;
 	 font-family: Arial, sans-serif;
 	 text-align: center;

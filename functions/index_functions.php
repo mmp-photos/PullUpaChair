@@ -31,12 +31,36 @@ function next_show($current_date, $connection_string){
 }
 
 function NextShowIndex($current_date, $connection_string){
-  echo '<div id="show_box">';
+  echo '<div id="show_box_index">';
   echo '<div id="upcoming_index">';
-  echo '<p class="calendar_month">Next Show</p>';
+  echo '<p class="next_show">Next Show</p>';
   $formatted_date = next_show($current_date, $connection_string);
   echo '</div>';
-  echo '<p><a class="submission" href="submissions.php">Submit A Story</a></p>';
+  // COMMENTING OUT THE SUBMISSION LINE --->   echo '<p><a class="submission" href="submissions.php">Submit A Story</a></p>';
+  echo '<p class="tickets"><a class="submission" href="http://www.brownpapertickets.com/event/3040850">Tickets</a></p>';
   echo '</div>';
 }
+
+function TicketLink($current_date, $connection_string){
+    $current_date = date('Y-m-d h:i:s');
+    $connection_string2 = $connection_string;
+
+    $sql = 'SELECT * FROM ShowInfo
+            WHERE ShowDateTime > CURRENT_TIMESTAMP';
+    
+    if($result = mysqli_query($connection_string2, $sql)){
+             
+      while($row = mysqli_fetch_array($result)){
+        $ticket_link     = $row['TicketLink'];
+
+        echo '<li><a href="'.$ticket_link.'">Tickets</a></li>';
+
+      }
+  
+    }else{
+    
+       die('Error: ' . mysqli_error($connection_string));
+    }
+}
+
 ?>
