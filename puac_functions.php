@@ -64,61 +64,6 @@ function select_active_performers(){
 
 }
 
-// Select Stories and Output details
-
-function story_details($story_id, $connection_string){
-  $story = $story_id;
-    
-  $connection_string2 = $connection_string;
-
-    $sql = 'SELECT * FROM 
-           `Stories` 
-           LEFT JOIN `Performers` on Stories.Performer = Performers.PerformerID
-           LEFT JOIN `ShowInfo` on Stories.ShowID = ShowInfo.ShowID
-           WHERE `StoryID` = "'.$story.'"
-           LIMIT 1';
-    
-    if($result = mysqli_query($connection_string2, $sql)){
-        
-      while($row = mysqli_fetch_array($result)){
-      
-        $title           = stripslashes($row['StoryName']);
-        $show_date       = stripslashes($row['ShowDateTime']);
-        $pID             = stripslashes($row['Performer']);
-        $description     = stripslashes($row['StoryDescription']);
-        $video_link      = stripslashes($row['VideoEmbed']);
-        $performer_fname = stripslashes($row['PerformerFirstName']);
-        $performer_lname = stripslashes($row['PerformerLastName']);
-
-        $date = strtotime($show_date);
-        $formatted_date = date("M d, Y", $date);
-        
-        $performer_name = $performer_fname.' '.$performer_lname;
-
-      }
-  
-    }else{
-    
-       die('Error: ' . mysqli_error($connection_string));
-    }
-
-
-    if(ISSET($title)){
-      echo '<h1>'.$title.'</h1>';
-      
-      if(ISSET($performer_name)){
-        echo '<p class="performer-name">By: <a href="performer.php?performer='.$pID.'">'.$performer_name.'</a></p>'; 
-      }
-      echo '<p class="show-date">Show: '.$formatted_date.'</p>';
-      echo '<p>'.$description.'</p>';
-      echo $video_link;
-    }
-    else{
-      echo "<p>The story could not be found.</p>";
-    }
-    
-}
-
 function story_details2($story_id, $connection_string){
   $story = $story_id;
     
@@ -300,15 +245,34 @@ function view_news($current_date, $connection_string){
 }
 
 function NextShow($current_date, $connection_string){
-  echo '<div id="show_box">';
-  echo '<div id="upcoming_index">';
-  echo '<p class="calendar_month">Next Show</p>';
-  $formatted_date = next_show($current_date, $connection_string);
-  echo '</div>';
-  // COMMENTING OUT THE SUBMISSION LINE --->   echo '<p><a class="submission" href="submissions.php">Submit A Story</a></p>';
-  echo '<p><a class="submission" href="http://www.brownpapertickets.com/event/3040850">Tickets</a></p>';
+  $current_date = date('Y-m-d h:i:s');
+  $connection_string2 = $connection_string;
 
-  echo '</div>';
+  $sql = 'SELECT * FROM ShowInfo
+          WHERE ShowDateTime > CURRENT_TIMESTAMP';
+  
+  if($result2 = mysqli_query($connection_string2, $sql)){
+
+  }else{
+     
+    die('Error: ' . mysqli_error($connection_string));
+ 
+  }
+  
+    
+  while($row2 = mysqli_fetch_array($result2)){
+    if($row2['ShowDateTime'] !== ''){
+      echo '<div id="show_box">';
+      echo '<div id="upcoming_index">';
+      echo '<p class="next_show">Next Show</p>';
+      $formatted_date = next_show($current_date, $connection_string);
+      echo '</div>';
+      // COMMENTING OUT THE SUBMISSION LINE --->   echo '<p><a class="submission" href="submissions.php">Submit A Story</a></p>';
+      echo '<p><a class="submission" href="http://www.brownpapertickets.com/event/3040850">Tickets</a></p>';
+
+      echo '</div>';
+    }
+  }
 }
 
 ?>

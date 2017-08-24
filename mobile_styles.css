@@ -13,7 +13,7 @@ a:link {
     font-family: 'Cutive', serif;
     font-weight: bold;
     margin-top:3px;
-    color: white;
+    color: #ed1b24;
 }
 
 a:visited {
@@ -21,7 +21,7 @@ a:visited {
     font-family: 'Cutive', serif;
     font-weight: bold;
     margin-top:3px;
-    color: white;
+    color: #7a7375;
 }
 
 a:hover {
@@ -33,6 +33,38 @@ a:hover {
 }
 
 a:active {
+    text-decoration: underline;
+    font-family: 'Cutive', serif;
+    font-weight: bold;
+    margin-top:3px;
+    color: #ed1b24;
+}
+
+a.nav:link {
+    text-decoration: none;
+    font-family: 'Cutive', serif;
+    font-weight: bold;
+    margin-top:3px;
+    color: #ed1b24;
+}
+
+a.nav:visited {
+    text-decoration: none;
+    font-family: 'Cutive', serif;
+    font-weight: bold;
+    margin-top:3px;
+    color: white;
+}
+
+a.nav:hover {
+    text-decoration: none;
+    font-family: 'Cutive', serif;
+    font-weight: bold;
+    margin-top:3px;
+    color: #f5fb9d;
+}
+
+a.nav:active {
     text-decoration: underline;
     font-family: 'Cutive', serif;
     font-weight: bold;
@@ -231,7 +263,12 @@ a.submission:active {
     font-family: 'Cutive', serif;
     border-bottom: 1px solid white;
   }
-  
+  img.about {
+    display: block;
+    width: 93%;
+    margin-right: auto;
+    margin-left: auto;
+  }
   img.main {
     display: inline-block;
     max-width: 90%;
@@ -239,7 +276,6 @@ a.submission:active {
     margin-top: 75px;
     margin-bottom: 26px;
   }
-  
   #float_right {
     display: block;
     text-align: right;
@@ -324,17 +360,18 @@ and (min-width : 1000px){
   }
   
   #upcoming {
-    display: block;
-    float: left;
+    display: inline-block;
     width: 200px;
     height: 200px;
     margin-top: 40px;
     margin-bottom: 60px;
+    margin-right: 35px;
     background-color: #FFFFFF;
     border-style: solid;
     border-color: red;
     border-width: 2px;
     vertical-align: top;
+    padding-top: -6px;
   }
   
   #upcoming_index {
@@ -397,6 +434,12 @@ and (min-width : 1000px){
     border: 0px;
     margin-top: 105px;
   }
+  img.about {
+    display: block;
+    width: 200px;
+    float: left;
+    margin-right: 12px;
+  }
 }
 
 
@@ -447,20 +490,16 @@ hr{
   margin-top: 32px;
 }
 
-  img.tagline {
-    display: inline-block;
-    max-width: 70%;
-    border: 0px;
-    margin: 0px 36px 0px 10px;
-  }
-
-img.about {
-  display: block;
-  width: 200px;
-  float: left;
-  margin-right: 12px;
+img.tagline {
+  display: inline-block;
+  max-width: 70%;
+  border: 0px;
+  margin: 0px 36px 0px 10px;
 }
-
+img.social {
+  display: inline-block;
+  width: 45px;
+}
 label {
     display: inline-block;
     width: 150px;

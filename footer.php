@@ -2,7 +2,7 @@
 
 <hr>
 
-<p class="footer">All content &copy; <?php echo date("Y");?> Pull Up A Chair.</p></div>
+<p class="footer">All content &copy; <?php echo date("Y");?> Pull Up A Chair.</p>
 
 </div>
 
@@ -19,3 +19,4 @@
       include 'navigation.php';
     ?>
   </div>
+</div>
