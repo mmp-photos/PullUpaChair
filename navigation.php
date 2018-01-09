@@ -4,7 +4,9 @@
   <li><a class="nav" href="contact.php">Contact</a></li>
   <li><a class="nav" href="show.php">Shows</a></li>
   <li><a class="nav" href="video.php">Videos</a></li>
+  <li><a class="nav" href="performer.php">Storytellers</a></li>
   <?php
-    TicketLink($current_date, $connection_string);
+    $show->SubmissionLinkNav($current_date);
+    $show->TicketLinkNav($current_date);
   ?>
 </ul>

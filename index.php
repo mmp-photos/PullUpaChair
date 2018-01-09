@@ -1,12 +1,24 @@
 <?php
 // Start the session
-
+session_start();
 // Includes
 
 include_once("connection_string.php");  
-include_once("puac_functions.php");  
 include_once("functions/index_functions.php");  
+include_once("functions/show_lib.php");  
+include_once("functions/story_lib.php");  
 
+//CREATE SHOW OBJECT
+$show = new Show;
+$show_details = $show->ShowObject($connection_string);
+$show->set_name($show_details);
+if(!ISSET($_SESSION['show_date'])){
+  $_SESSION['show_id']   = $show->show_id;
+  $_SESSION['show_date'] = $show->show_date;
+}
+else{
+
+}  
 // Check for errors passed in the URL
 
 if(ISSET($_GET['error'])){
@@ -33,8 +45,7 @@ if(ISSET($_GET['error'])){
 <?php
 
 // Upcoming Show //
-
-NextShowIndex($current_date, $connection_string);
+$show->NextShow($_SESSION['show_date']);
 $story_id = 2;
 
 ?>
@@ -49,15 +60,19 @@ $story_id = 2;
 <?php
 
 // Featured Story //
-
-story_details_index($story_id, $connection_string);
-
+$story_row = SelectStory($connection_string);
+$story_id = '000002';
+$story = new Story;
+$story->set_name($story_row);
+echo '<div class="index_story">';
+$story->ShowStory();
+echo '</div>';
 ?>
 
 <!-- Show News Updates -->
 
 <?php
-  view_news($current_date, $connection_string)
+  //view_news($current_date, $connection_string)
 ?>
 
 </div>

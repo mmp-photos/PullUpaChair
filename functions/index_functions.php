@@ -30,24 +30,8 @@ function next_show($current_date, $connection_string){
 
 }
 
-function NextShowIndex($current_date, $connection_string){
+function NextShowIndex($show_id){
 
-  $current_date = date('Y-m-d h:i:s');
-  $connection_string2 = $connection_string;
-
-  $sql = 'SELECT * FROM ShowInfo
-          WHERE ShowDateTime > CURRENT_TIMESTAMP';
-  
-  if($result2 = mysqli_query($connection_string2, $sql)){
-
-  }else{
-     
-    die('Error: ' . mysqli_error($connection_string));
- 
-  }
-  
-    
-  while($row2 = mysqli_fetch_array($result2)){
     if($row2['ShowDateTime'] !== ''){
       echo '<div id="show_box_index">';
       echo '<div id="upcoming_index">';
@@ -59,7 +43,7 @@ function NextShowIndex($current_date, $connection_string){
       echo '</div>';
     }
   }
-}
+
 
 function TicketLink($current_date, $connection_string){
     $current_date = date('Y-m-d h:i:s');

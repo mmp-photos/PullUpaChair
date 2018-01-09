@@ -7,6 +7,7 @@ echo '    <ul>
       <li class="nav"><a class="menu" href="container.php?action=story&context=add">Add Story</a></li>
       <li class="nav"><a class="menu" href="container.php?action=news&context=list">View News</a></li>
       <li class="nav"><a class="menu" href="container.php?action=news&context=add">Add News</a></li>
+      <li class="nav"><a class="menu" href="index.php?action=logout">Logout</a></li>
     </ul>';
     
 ?>

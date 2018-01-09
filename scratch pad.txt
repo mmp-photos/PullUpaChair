@@ -1,0 +1,11 @@
+// Check Access and Redirect if not an Admin User
+
+function verify_access($user_access){
+
+  switch($user_access){
+    case "ADMIN":
+     break;
+    default:
+     header('Location:index.php?error=0000000001');
+  }
+}

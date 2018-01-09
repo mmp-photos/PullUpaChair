@@ -45,7 +45,7 @@ a.nav:link {
     font-family: 'Cutive', serif;
     font-weight: bold;
     margin-top:3px;
-    color: #ed1b24;
+    color: #ffffff;
 }
 
 a.nav:visited {
@@ -163,7 +163,10 @@ a.submission:active {
 
 /* * * * * MOBILE STYLES * * * * */
 
-@media (max-width: 800px) {
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px)
+  and (-webkit-min-device-pixel-ratio: 2){
   
   #welcome{
     display: block;
@@ -213,8 +216,8 @@ a.submission:active {
   }
   
   iframe.video {
-      width: 159px;
-      height: 100px;
+      width: 290;
+      height: 167px;
   }
   
     #twitterlist {
@@ -282,7 +285,19 @@ a.submission:active {
     width: 100%;
     margin-bottom: 36px;
   }
-  
+  p.story-description {
+    width: 250px;
+    background-color: none;
+    margin-bottom: 65px;
+  }
+  div.plist_name{
+    display: inline-block;
+    width: 115px;
+    margin: 26px 3px 3px 3px;
+    text-align: center;
+    overflow: hidden;
+    float: both;
+  }
 }
 
 
@@ -440,6 +455,19 @@ and (min-width : 1000px){
     float: left;
     margin-right: 12px;
   }
+  p.story-description {
+    width: 550px;
+    background-color: none;
+    margin-bottom: 65px;
+  }
+  div.plist_name{
+    display: inline-block;
+    width: 155px;
+    margin: 26px 3px 3px 3px;
+    text-align: center;
+    overflow: hidden;
+    float: both;
+  }
 }
 
 
@@ -472,24 +500,59 @@ and (min-width : 1000px){
   margin-right: 16px;
   text-align: left;
 }
+div.performer{
+  display: inline-block;
+  background-color: none;
+  margin: 45px 0px 9px;
+}
   h1{
     font-family: 'Cutive', serif;
     font-size: 24px;
     font-weight: normal;
     margin-top: 40px;
   }
-  
+  h1.name{
+    font-family: 'Cutive', serif;
+    font-size: 24px;
+    font-weight: normal;
+    margin-top: 20px;
+  }  
   h2{
     font-family: 'Cutive', serif;
     font-size: 16px;
     font-weight: normal;
     margin-top: 40px;
   }
-    
+  h2.clear{
+    font-family: 'Cutive', serif;
+    font-size: 16px;
+    font-weight: normal;
+    margin-top: 10px;
+    clear: both;
+  }
+  h2.show_name{
+    font-family: 'Cutive', serif;
+    font-size: 16px;
+    font-weight: normal;
+    margin-top: 40px;
+    line-height: 0px;
+  }
+  h2.story-title {
+    clear: both;
+    margin-top: 24px;
+  }      
 hr{
   margin-top: 32px;
 }
-
+img.links {
+    display: inline-block;
+    max-width: 35px;
+  }
+img.performer_pic {
+  margin-bottom: 12px;
+  max-width: 90%;
+  box-shadow: 5px 5px 10px #888888;
+}
 img.tagline {
   display: inline-block;
   max-width: 70%;
@@ -534,8 +597,11 @@ ol{
 p {
   text-align: left;
   width: 80%;
+  font-family: Helvetica, Arial, Sans-Serif;
+  font-size: 12px;
 }
   p.calendar_month{
+    font-family: 'Libre Baskerville', serif;
     position: relative;
     bottom: -14px;
     left: 0px;
@@ -552,6 +618,7 @@ p {
   }  
   p.calendar_day{
     position: relative;
+    font-family: 'Libre Baskerville', serif;
     top: 0px;
     left: 0px;
     display: inline-block;
@@ -589,7 +656,12 @@ p {
     font-size: 12px;
     margin-top: 32px;
   }
-
+p.margin_bottom{
+  text-align: left;
+  font-family: Helvetica, Arial, Sans-Serif;
+  font-size: 12px;
+  margin-bottom: 9px;
+}
 p.menu-logo {
   float: left;
 }
@@ -616,6 +688,9 @@ p.performer-name {
 p.show-date {
   font-size: 12px;
   margin-top: 0px;
+}
+p.story-title {
+  clear: both;
 }
 p.tickets {
   margin-top: 6px;
@@ -650,11 +725,24 @@ p.tickets {
     z-index: 5;    
   }
 
+.video-responsive {
+  position: relative;
+  width: 90%;
+  padding-bottom: 75%;
+  height: 0;
+  overflow: hidden;
+}
 
-
-
-
-
+.video-responsive iframe,
+.video-responsive object,
+.video-responsive embed,
+.video-responsive video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 
 
 
