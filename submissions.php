@@ -90,7 +90,7 @@ $story_id = 2;
     VerificationPage($error, $posted);
   }
   elseif($state == 'input'){
-    SubmissionForm($show_id);
+    SubmissionForm($show->show_id);
   }
 ?>
 

@@ -55,6 +55,7 @@ function ShowTerms($current_date, $connection_string){
 // Primary Form //
 
 function SubmissionForm($show_id){
+  include 'submission_text.html';
   echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST">';
   echo '<h2>Contact Information</h2>';
   echo '<label for="first_name">Name</label><input type="text" name="first_name" placeholder="First"> <input type="text" name="last_name" placeholder="Last"><br />';
