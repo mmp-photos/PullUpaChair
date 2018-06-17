@@ -1,5 +1,6 @@
 <?php
 
+
 function AddAdminUser($current_date, $connection_string, $posted_data){
 
     $user_access = 'ADMIN';

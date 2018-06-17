@@ -51,40 +51,11 @@ function ShowTerms($current_date, $connection_string){
     
 }
 
-// SELECT UPCOMING SHOW //
-
-function next_show($current_date, $connection_string){
-    
-    $current_date = date('Y-m-d h:i:s');
-    $connection_string2 = $connection_string;
-
-    $sql = 'SELECT * FROM ShowInfo
-            WHERE ShowDateTime > CURRENT_TIMESTAMP';
-    
-    if($result = mysqli_query($connection_string2, $sql)){
-             
-      while($row = mysqli_fetch_array($result)){
-        $show_name       = $row['ShowName'];
-        $show_date       = stripslashes($row['ShowDateTime']);
-        $date            = strtotime($show_date);
-        $formatted_month = date("F", $date);
-        $formatted_day   = date("d", $date);
-        
-        echo '<p class="calendar_day">'.$formatted_day.'</p>';
-        echo '<p class="calendar_month">'.$formatted_month.'</p>';
-
-      }
-  
-    }else{
-    
-       die('Error: ' . mysqli_error($connection_string));
-    }
-
-}
 
 // Primary Form //
 
 function SubmissionForm($show_id){
+  include 'submission_text.html';
   echo '<form action="'.$_SERVER['PHP_SELF'].'" method="POST">';
   echo '<h2>Contact Information</h2>';
   echo '<label for="first_name">Name</label><input type="text" name="first_name" placeholder="First"> <input type="text" name="last_name" placeholder="Last"><br />';
@@ -195,6 +166,9 @@ function submission($posted){
 function InsertSubmission($error, $posted, $connection_string, $show_id){
   if(ISSET($_POST["posted"])){
 
+    $user = new User;
+    $user_id = $user->AddUserSubmission($connection_string, $posted);
+
     $error             = $error;
     $submission        = $posted;
     $connection_string = $connection_string;
@@ -211,36 +185,42 @@ function InsertSubmission($error, $posted, $connection_string, $show_id){
     $synopsis       = $submission['synopsis'];
     $links          = $submission['links'];
     $show_id        = $submission['show_id'];
-    $terms          = $submission['show_id'];
+    $terms          = $submission['terms'];
     $date_submitted = date("Y-m-d h:m:s");
     $date_reviewed  = date("Y-m-d h:m:s");
     $reviewed_by    = '000';
     $status         = 'SB';
-    $terms          = $submission['terms'];
+    $user_id        = $user_id;
 
-    $sql = sprintf("INSERT INTO Submissions (first_name,last_name,stage_name,email,phone,title,medium,tone,length,synopsis,links,show_id,date_submitted,date_reviewed,reviewed_by,status,terms) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')", 
+    $sql = sprintf("INSERT INTO Submissions (first_name,last_name,stage_name,email,phone,medium,title,tone,length,synopsis,links,show_id,terms,date_submitted,date_reviewed,reviewed_by,status,UserID) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')", 
     
       mysqli_real_escape_string($connection_string,$first_name), 
       mysqli_real_escape_string($connection_string,$last_name), 
       mysqli_real_escape_string($connection_string,$stage_name),
       mysqli_real_escape_string($connection_string,$email),
       mysqli_real_escape_string($connection_string,$phone),
-      mysqli_real_escape_string($connection_string,$title),
       mysqli_real_escape_string($connection_string,$medium),
+      mysqli_real_escape_string($connection_string,$title),
       mysqli_real_escape_string($connection_string,$tone),
       mysqli_real_escape_string($connection_string,$length),
       mysqli_real_escape_string($connection_string,$synopsis),
       mysqli_real_escape_string($connection_string,$links),
       mysqli_real_escape_string($connection_string,$show_id),
+      mysqli_real_escape_string($connection_string,$terms),
       mysqli_real_escape_string($connection_string,$date_submitted),
       mysqli_real_escape_string($connection_string,$date_reviewed),
       mysqli_real_escape_string($connection_string,$reviewed_by),
       mysqli_real_escape_string($connection_string,$status),
-      mysqli_real_escape_string($connection_string,$terms));
+      mysqli_real_escape_string($connection_string,$user_id));
     
     if($result = mysqli_query($connection_string, $sql)){
-         $state = 'confirm';    
-        } else {
+        $last_id = mysqli_insert_id($connection_string);
+        $email = new Submission;
+        $row = $email->FetchSubmission($connection_string, $last_id);
+        $email->set_name($row);
+        $email->SendSubmissionEmail();
+        $state = 'confirm';
+    } else {
       die('Error: ' . mysqli_error($connection_string));
     }   
   }

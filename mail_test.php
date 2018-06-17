@@ -1,11 +1,13 @@
-<php
+<?php
+$to      = 'grafixgeek@yahoo.com';
+$subject = 'Hello from Pull Up a Chair';
+$message = "This is a message<br />
+            Just testing the mail function.\n";
+$headers = 'From: admin@pullupachair.com' . "\r\n" .
+    'Reply-To: admin@pullupachair.com' . "\r\n" .
+    'X-Mailer: PHP/' . phpversion().
+    'MIME-Version: 1.0'."\r\n".
+    'Content-Type: text/html; charset=ISO-8859-1'."\r\n";
 
-  $admin_email = "admin@pullupachairindy.com";
-  $email = 'From: /usr/sbin/sendmail'."\r\n";
-  $subject = 'Submission for Show';
-  $body = 'Test';
-  
-  //send email
-  mail($admin_email, "$subject", $body, "From:" . $email);
-  
+mail($to, $subject, $message, $headers);
 ?>
